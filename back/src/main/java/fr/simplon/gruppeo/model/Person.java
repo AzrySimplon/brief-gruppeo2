@@ -1,7 +1,10 @@
 package fr.simplon.gruppeo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "person")
@@ -24,9 +27,9 @@ public class Person {
     
     private LocalDate birth_date;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Integer group_id;
+    @ManyToMany(mappedBy = "members")
+    @JsonIgnoreProperties("members")
+    private Set<PersonGroup> groups = new HashSet<>();
 
 
     public Person() {
@@ -41,15 +44,6 @@ public class Person {
         this.profile = profile;
         this.birth_date = birth_date;
     }
-
-    public Integer getGroup() {
-        return group_id;
-    }
-
-    public void setGroup(Integer group) {
-        this.group_id = group;
-    }
-
 
     public Long getId() {
         return id;
@@ -113,5 +107,13 @@ public class Person {
 
     public void setBirth_date(LocalDate birth_date) {
         this.birth_date = birth_date;
+    }
+
+    public Set<PersonGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<PersonGroup> groups) {
+        this.groups = groups;
     }
 }

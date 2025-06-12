@@ -21,10 +21,6 @@ public class PersonGroupController {
     @PostMapping
     public ResponseEntity<PersonGroup> createGroup(@RequestBody PersonGroup group) {
         PersonGroup savedGroup = groupRepository.save(group);
-        //edit all persons by id to set their group id as this one
-        for(Integer id : group.getMembersIds()){
-
-        }
         return ResponseEntity.ok(savedGroup);
     }
 

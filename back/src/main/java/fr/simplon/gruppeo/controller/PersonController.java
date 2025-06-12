@@ -50,7 +50,7 @@ public class PersonController {
                     existingPerson.setTechnical_knowledge(personDetails.getTechnical_knowledge());
                     existingPerson.setProfile(personDetails.getProfile());
                     existingPerson.setBirth_date(personDetails.getBirth_date());
-                    existingPerson.setGroup(personDetails.getGroup());
+                    existingPerson.setGroups(personDetails.getGroups());
                     
                     Person updatedPerson = personRepository.save(existingPerson);
                     return ResponseEntity.ok(updatedPerson);
