@@ -31,6 +31,11 @@ public class Person {
     @JsonIgnoreProperties("members")
     private Set<PersonGroup> groups = new HashSet<>();
 
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("person")
+    private UserViewer userViewer;
+
+
 
     public Person() {
     }
@@ -115,5 +120,13 @@ public class Person {
 
     public void setGroups(Set<PersonGroup> groups) {
         this.groups = groups;
+    }
+
+    public UserViewer getUserViewer() {
+        return userViewer;
+    }
+
+    public void setUserViewer(UserViewer userViewer) {
+        this.userViewer = userViewer;
     }
 }
