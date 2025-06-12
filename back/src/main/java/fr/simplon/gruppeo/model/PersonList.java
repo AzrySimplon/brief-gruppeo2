@@ -9,50 +9,92 @@ import java.util.Set;
 @Entity
 @Table(name = "person_list")
 public class PersonList {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-   private String name;
-   private Integer number_of_members;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private Integer number_of_members;
 
-   @ManyToMany
-   @JoinTable(
-		   name = "person_list_members",
-		   joinColumns = @JoinColumn(name = "list_id"),
-		   inverseJoinColumns = @JoinColumn(name = "person_id")
-   )
-   @JsonIgnoreProperties("lists")
-   private Set<Person> members = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "person_list_members",
+            joinColumns = @JoinColumn(name = "list_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    @JsonIgnoreProperties("lists")
+    private Set<Person> members = new HashSet<>();
 
-   public PersonList() {
-   }
+    @ManyToMany(mappedBy = "person_lists")
+    @JsonIgnoreProperties("person_lists")
+    private Set<UserAdmin> admins = new HashSet<>();
 
-   public PersonList(String name, Integer number_of_members) {
-	  this.name = name;
-	  this.number_of_members = number_of_members;
-   }
 
-   public Long getId() {
-	  return id;
-   }
-   public void setId(Long id) {
-	  this.id = id;
-   }
-   public String getName() {
-	  return name;
-   }
-   public void setName(String name) {
-	  this.name = name;
-   }
-   public Integer getNumber_of_members() {
-	  return number_of_members;
-   }
-   public void setNumber_of_members(Integer number_of_members) {
-	  this.number_of_members = number_of_members;
-   }
-   public void updateNumberOfMembers() { this.number_of_members = members.size(); }
-   public void addMember(Person person) { this.members.add(person); updateNumberOfMembers(); }
-   public Set<Person> getMembers() { return members; }
-   public void setMembers(Set<Person> members) { this.members = members; updateNumberOfMembers(); }
+    public PersonList() {
+    }
+
+    public PersonList(String name, Integer number_of_members) {
+        this.name = name;
+        this.number_of_members = number_of_members;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getNumber_of_members() {
+        return number_of_members;
+    }
+
+    public void setNumber_of_members(Integer number_of_members) {
+        this.number_of_members = number_of_members;
+    }
+
+    public void updateNumberOfMembers() {
+        this.number_of_members = members.size();
+    }
+
+    public void addMember(Person person) {
+        this.members.add(person);
+        updateNumberOfMembers();
+    }
+
+    public Set<Person> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<Person> members) {
+        this.members = members;
+        updateNumberOfMembers();
+    }
+
+    Set<UserAdmin> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(Set<UserAdmin> admins) {
+        this.admins = admins;
+    }
+
+    public boolean containsPerson(Person person) {
+        return members.contains(person);
+    }
+
+    public boolean containsGroup(PersonGroup group) {
+        // Check if any member of the group is in this list
+        return group.getMembers().stream()
+                .anyMatch(members::contains);
+    }
 
 }
