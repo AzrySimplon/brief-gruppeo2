@@ -27,6 +27,14 @@ public class PersonGroupController {
     //Add a person to a group
     @PostMapping("/{id}/add-member")
     public ResponseEntity<PersonGroup> addMemberToGroup(@PathVariable Long id, @RequestBody Person person) {
+
+        //TODO: check if the person is already in the same list as the group
+        //get group by id
+        //check if person is in the same list as the group
+        PersonGroup groupListId = groupRepository.findById(id).orElse(null);
+
+
+
         return groupRepository.findById(id)
                 .map(group -> {
                     group.addMember(person);
