@@ -32,6 +32,7 @@ public class Person {
     private Set<PersonGroup> groups = new HashSet<>();
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("person")
     private UserViewer userViewer;
 
 

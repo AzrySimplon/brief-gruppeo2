@@ -1,5 +1,6 @@
 package fr.simplon.gruppeo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,7 @@ public class UserViewer {
 
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("person_id")
     private Person person;
 
     // Constructors
