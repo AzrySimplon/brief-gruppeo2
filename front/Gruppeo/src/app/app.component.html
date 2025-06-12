@@ -1,0 +1,20 @@
+<header>
+  <app-header-connection *ngIf="!connected" class="center-container"></app-header-connection>
+  <app-header-connected *ngIf="connected" class="center-container"></app-header-connected>
+</header>
+
+
+
+<div id="router-outlet">
+  <router-outlet></router-outlet>
+</div>
+
+
+<img ngSrc="/assets/shape1.svg" alt="decoration" aria-hidden="true" id="shape1" height="542" width="265">
+<img ngSrc="/assets/shape2.svg" alt="decoration" aria-hidden="true" id="shape2" height="306" width="426">
+
+
+
+
+<app-footer></app-footer>
+

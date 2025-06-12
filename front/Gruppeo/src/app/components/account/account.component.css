@@ -1,0 +1,27 @@
+/* Add this to account.component.css */
+
+/* Styles for the dialog backdrop (the semi-transparent overlay) */
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}
+
+h3{
+  font-size: 1.5em;
+}
+
+/* Styles for the dialog itself */
+dialog {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px; /* Adjust as needed */
+  width: 80%;
+  margin: auto;
+}
+
+dialog > div > form > section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

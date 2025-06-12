@@ -1,0 +1,8 @@
+<h2 class="category-title">Inscription</h2>
+<form (ngSubmit)="validate()" class="main-container">
+  <app-text-input [text]="`Code d'activation`" #input_activation></app-text-input>
+  <app-text-input [text]="`Identifiant`" #input_id></app-text-input>
+  <app-text-input [text]="'Mot de passe'" #input_pwd></app-text-input>
+
+  <button class="classic-button" type="submit">S'inscrire</button>
+</form>

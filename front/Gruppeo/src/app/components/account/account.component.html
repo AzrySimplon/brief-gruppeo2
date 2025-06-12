@@ -1,0 +1,20 @@
+<h2 class="category-title">Compte</h2>
+<form class="main-container" (ngSubmit)="validate()">
+  <app-text-input [text]="'Modifier Nom'" #input_name></app-text-input>
+  <button type="button" (click)="confirm_dialog.showModal()" class="classic-button">Valider</button>
+  <button type="button" (click)="confirm_dialog.showModal()" class="danger-button">Supprimer le compte</button>
+</form>
+
+<dialog #confirm_dialog>
+  <div class="main-container">
+    <h3>Confirmation</h3>
+    <form (ngSubmit)="confirmAction()">
+      <app-text-input [text]="'Entrez votre mot de passe'"></app-text-input>
+      <section>
+        <button type="submit" class="classic-button">Confirmer</button>
+        <button class="danger-button" (click)="confirm_dialog.close()">Annuler</button>
+      </section>
+    </form>
+  </div>
+</dialog>
+

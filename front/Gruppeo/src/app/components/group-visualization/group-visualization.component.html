@@ -1,0 +1,9 @@
+<h2 class="category-title">Groupes</h2>
+<div class="main-container">
+  <button class="classic-button" [routerLink]="'/group-creation/1'">Créer un nouveau groupe</button>
+<section class="scroll-section">
+  <app-dropdown-selection *ngFor="let group of groupsArrayWithNames" [title_text]="group.name"
+                          [optionTextsArray]="group.memberNames">
+  </app-dropdown-selection>
+</section>
+</div>

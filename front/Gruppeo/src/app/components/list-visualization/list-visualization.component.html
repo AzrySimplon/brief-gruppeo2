@@ -1,0 +1,9 @@
+<h2 class="category-title">Listes</h2>
+<div class="main-container">
+  <button class="classic-button" [routerLink]="'/list-creation'">Créer une nouvelle liste</button>
+<div class="scroll-section">
+  <button *ngFor="let list of listsArray" class="classic-button" routerLink="/groups/1">
+    {{ list.name }} | {{ list.nbr_persons }} personnes
+  </button>
+</div>
+</div>

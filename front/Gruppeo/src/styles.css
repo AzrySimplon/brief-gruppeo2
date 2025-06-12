@@ -1,0 +1,128 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+  --dark-blue: #4F95C0;
+  --light-blue: #A1D7D6;
+  --pure-white: #FFFFFF;
+  --light-grey: #E8E8E8;
+  --red-blood: #E02333;
+  --light-black: #383838;
+}
+*{
+  color: var(--light-black);
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background-color: var(--pure-white);
+}
+
+
+
+
+header{
+  background-color: var(--dark-blue);
+}
+
+footer{
+  background-color: var(--light-blue);
+  height: 5em;
+}
+
+.classic-button, .header-button, .danger-button{
+  font-weight: bold;
+  border: none;
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  min-height: 40px;
+  cursor: pointer;
+
+  &:hover{
+    transition: 0.5s;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(180deg) brightness(105%) contrast(105%);
+  }
+}
+
+.header-button{
+  background-color: var(--light-blue);
+  width: 33%;
+  border-radius: 2em;
+  font-size: 1.1em;
+  height: 2.8em;
+}
+
+.classic-button{
+  background-color: var(--light-blue);
+  border-radius: 0.5em;
+}
+
+.danger-button{
+  background-color: var(--red-blood);
+  border-radius: 0.8em;
+  color: var(--pure-white);
+}
+
+.center-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.center-text{
+  text-align: center;
+}
+
+.presentation-image{
+  width: 95%;
+  height: 95%;
+  object-fit: cover;
+  margin: 2.5%;
+  border-radius: 1.5em;
+}
+
+.category-title{
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.main-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: 90%;
+  background-color: var(--light-grey);
+  padding: 2em 0;
+  margin: 2em auto;
+  border-radius: 0.5em;
+  & > *{
+    width: 90%;
+  }
+}
+
+@media (min-width: 800px) {
+  .main-container {
+    width: 50%;
+  }
+}
+
+.scroll-section{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  overflow-y: scroll;
+  height: 50vh;
+  scrollbar-color: var(--light-blue) var(--pure-white);
+  scrollbar-track-color: #383838;
+  scrollbar-width: 5%;
+  padding-right: 5px;
+  gap: 1.5em;
+
+  &> *{
+    padding: 0;
+    margin: 0;
+  }
+}

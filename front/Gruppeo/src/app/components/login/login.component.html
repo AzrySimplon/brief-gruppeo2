@@ -1,0 +1,7 @@
+<h2 class="category-title">Connexion</h2>
+<form class="main-container">
+  <app-text-input [text]="`Identifiant`" #input_id></app-text-input>
+  <app-text-input [text]="'Mot de passe'" #input_pwd></app-text-input>
+
+  <button class="classic-button" type="submit" [routerLink]="'/lists'">Se Connecter</button>
+</form>
