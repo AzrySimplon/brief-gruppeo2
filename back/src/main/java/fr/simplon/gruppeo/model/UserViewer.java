@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "user_viewer")
 public class UserViewer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;

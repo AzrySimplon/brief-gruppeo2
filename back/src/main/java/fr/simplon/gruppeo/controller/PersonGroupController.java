@@ -24,6 +24,18 @@ public class PersonGroupController {
         return ResponseEntity.ok(savedGroup);
     }
 
+    //Add a person to a group
+    @PostMapping("/{id}/add-member")
+    public ResponseEntity<PersonGroup> addMemberToGroup(@PathVariable Long id, @RequestBody Person person) {
+        return groupRepository.findById(id)
+                .map(group -> {
+                    group.addMember(person);
+                    PersonGroup updatedGroup = groupRepository.save(group);
+                    return ResponseEntity.ok(updatedGroup);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     // Read All
     @GetMapping
     public List<PersonGroup> getAll(){
