@@ -27,13 +27,21 @@ public class Person {
     
     private LocalDate birth_date;
 
-    @ManyToMany(mappedBy = "members")
+    // Join to PersonGroup table
+    @ManyToMany(mappedBy = "members" , cascade = CascadeType.ALL)
     @JsonIgnoreProperties("members")
     private Set<PersonGroup> groups = new HashSet<>();
 
+    // Join to UserViewer table
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("person")
     private UserViewer userViewer;
+
+    //Join to PersonList table
+    @ManyToMany(mappedBy = "members")
+    @JsonIgnoreProperties("members")
+    private Set<PersonList> lists = new HashSet<>();
+
 
 
 
@@ -128,5 +136,23 @@ public class Person {
 
     public void setUserViewer(UserViewer userViewer) {
         this.userViewer = userViewer;
+    }
+
+    public Set<PersonList> getLists() {
+        return lists;
+    }
+
+    public void setLists(Set<PersonList> lists) {
+        this.lists = lists;
+    }
+
+    public void addList(PersonList list) {
+        this.lists.add(list);
+        list.getMembers().add(this);
+    }
+
+    public void removeList(PersonList list) {
+        this.lists.remove(list);
+        list.getMembers().remove(this);
     }
 }
