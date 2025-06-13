@@ -24,8 +24,7 @@ public class PersonList {
     @JsonIgnoreProperties("lists")
     private Set<Person> members = new HashSet<>();
 
-    @ManyToMany(mappedBy = "person_lists")
-    @JsonIgnoreProperties("person_lists")
+    @ManyToMany(mappedBy = "personLists")
     private Set<UserAdmin> admins = new HashSet<>();
 
 
