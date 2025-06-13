@@ -2,6 +2,7 @@ package fr.simplon.gruppeo.controller;
 
 import fr.simplon.gruppeo.model.Person;
 import fr.simplon.gruppeo.model.PersonGroup;
+import fr.simplon.gruppeo.model.PersonList;
 import fr.simplon.gruppeo.repository.PersonGroupRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +34,21 @@ public class PersonGroupController {
         //check if person is in the same list as the group
         PersonGroup groupListId = groupRepository.findById(id).orElse(null);
 
-
-
         return groupRepository.findById(id)
                 .map(group -> {
                     group.addMember(person);
+                    PersonGroup updatedGroup = groupRepository.save(group);
+                    return ResponseEntity.ok(updatedGroup);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    //Set the list to a group
+    @PostMapping("/{id}/set-list")
+    public ResponseEntity<PersonGroup> setListForGroup(@PathVariable Long id, @RequestBody PersonList list) {
+        return groupRepository.findById(id)
+                .map(group -> {
+                    group.setList(list);
                     PersonGroup updatedGroup = groupRepository.save(group);
                     return ResponseEntity.ok(updatedGroup);
                 })

@@ -38,12 +38,9 @@ public class Person {
     private UserViewer userViewer;
 
     //Join to PersonList table
-    @ManyToMany(mappedBy = "members")
+    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("members")
     private Set<PersonList> lists = new HashSet<>();
-
-
-
 
     public Person() {
     }
