@@ -15,6 +15,7 @@ public class PersonList {
     private String name;
     private Integer number_of_members;
 
+    //Join to Person table
     @ManyToMany
     @JoinTable(
             name = "person_list_members",
@@ -24,6 +25,7 @@ public class PersonList {
     @JsonIgnoreProperties("lists")
     private Set<Person> members = new HashSet<>();
 
+    //Join to UserAdmin table
     @ManyToMany(mappedBy = "personLists")
     private Set<UserAdmin> admins = new HashSet<>();
 

@@ -15,6 +15,7 @@ public class PersonGroup {
     private String name;
     private Integer number_of_members;
 
+    //Join to Person table
     @ManyToMany
     @JoinTable(
             name = "person_group_members",
