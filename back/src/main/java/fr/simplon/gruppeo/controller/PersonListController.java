@@ -1,5 +1,6 @@
 package fr.simplon.gruppeo.controller;
 
+import fr.simplon.gruppeo.model.Person;
 import fr.simplon.gruppeo.model.PersonGroup;
 import fr.simplon.gruppeo.model.PersonList;
 import fr.simplon.gruppeo.repository.PersonListRepository;
@@ -47,6 +48,19 @@ public class PersonListController {
                  return ResponseEntity.ok(updatedList);
               })
               .orElse(ResponseEntity.notFound().build());
+   }
+
+   // Add a member in a list
+   @PostMapping("/{id}/add-member")
+   public ResponseEntity<PersonList> addMemberToGroup(@PathVariable Long id, @RequestBody Person person) {
+
+	  return personListRepository.findById(id)
+			  .map(list -> {
+				 list.addMember(person);
+				 PersonList updateList = personListRepository.save(list);
+				 return ResponseEntity.ok(updateList);
+			  })
+			  .orElse(ResponseEntity.notFound().build());
    }
 
    // Update
