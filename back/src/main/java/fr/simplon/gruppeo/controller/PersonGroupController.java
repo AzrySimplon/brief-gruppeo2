@@ -4,18 +4,22 @@ import fr.simplon.gruppeo.model.Person;
 import fr.simplon.gruppeo.model.PersonGroup;
 import fr.simplon.gruppeo.model.PersonList;
 import fr.simplon.gruppeo.repository.PersonGroupRepository;
+import fr.simplon.gruppeo.repository.PersonRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/person-group")
 public class PersonGroupController {
     private final PersonGroupRepository groupRepository;
+    private final PersonRepository personRepository;
 
-    public PersonGroupController(PersonGroupRepository groupRepository) {
+    public PersonGroupController(PersonGroupRepository groupRepository, PersonRepository personRepository) {
         this.groupRepository = groupRepository;
+        this.personRepository = personRepository;
     }
 
     // Create
@@ -26,23 +30,31 @@ public class PersonGroupController {
     }
 
     //Add a person to a group
-    @PostMapping("/{id}/add-member")
-    public ResponseEntity<PersonGroup> addMemberToGroup(@PathVariable Long id, @RequestBody Person person) {
+    @PostMapping("/{id}/add-member/{personId}")
+    public ResponseEntity<PersonGroup> addMemberToGroup(@PathVariable Long id, @PathVariable Long personId) {
+        Person person = personRepository.findById(personId).orElse(null);
+        //Get group's list id
+        Long groupListId = Objects.requireNonNull(groupRepository.findById(id).orElse(null)).getList().getId();
 
-        //TODO: check if the person is already in the same list as the group
-        //get group by id
-        //check if person is in the same list as the group
-        PersonGroup groupListId = groupRepository.findById(id).orElse(null);
+        if (person == null || groupListId == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-        return groupRepository.findById(id)
-                .map(group -> {
-                    group.addMember(person);
-                    PersonGroup updatedGroup = groupRepository.save(group);
-                    return ResponseEntity.ok(updatedGroup);
-                })
-                .orElse(ResponseEntity.notFound().build());
+        //Check if the group has a list in common with the person
+        System.out.println(person.getLists().stream().anyMatch(l -> l.getId().equals(groupListId)));
+        if (person.getLists().stream().anyMatch(l -> l.getId().equals(groupListId))) {
+            return groupRepository.findById(id)
+                    .map(group -> {
+                        group.addMember(person);
+                        PersonGroup updatedGroup = groupRepository.save(group);
+                        return ResponseEntity.ok(updatedGroup);
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+        }
+        else {
+            return ResponseEntity.badRequest().build();
+        }
     }
-
     //Set the list to a group
     @PostMapping("/{id}/set-list")
     public ResponseEntity<PersonGroup> setListForGroup(@PathVariable Long id, @RequestBody PersonList list) {
