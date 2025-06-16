@@ -4,28 +4,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_viewer")
-public class UserViewer {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String username;
+    private String password;
 
+    //Join to Person table
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @JsonIgnoreProperties("person_id")
     private Person person;
 
-    // Constructors
-    public UserViewer() {}
+    public User() {}
 
-    public UserViewer(String username, Person person) {
+    public User(String username, String password) {
         this.username = username;
-        this.person = person;
+        this.password = password;
     }
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -42,18 +42,19 @@ public class UserViewer {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Person getPerson() {
         return person;
     }
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public void setPerson(Person person, boolean setOtherSide) {
-        this.person = person;
-        if (setOtherSide && person != null) {
-            person.setUserViewer(this);
-        }
     }
 }

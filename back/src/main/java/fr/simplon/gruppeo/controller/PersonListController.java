@@ -50,11 +50,13 @@ public class PersonListController {
               .orElse(ResponseEntity.notFound().build());
    }
 
-   // Add a member in a list
-   @PostMapping("/{id}/add-member")
-   public ResponseEntity<PersonList> addMemberToGroup(@PathVariable Long id, @RequestBody Person person) {
-
-	  return personListRepository.findById(id)
+   // Add a student in a list
+   @PostMapping("/{id}/add-student")
+   public ResponseEntity<PersonList> addStudentToList(@PathVariable Long id, @RequestBody Person person) {
+       if (person.getIs_teacher()){
+           return ResponseEntity.badRequest().build();
+       }
+	    return personListRepository.findById(id)
 			  .map(list -> {
 				 list.addMember(person);
 				 PersonList updateList = personListRepository.save(list);
@@ -62,6 +64,21 @@ public class PersonListController {
 			  })
 			  .orElse(ResponseEntity.notFound().build());
    }
+
+    // Add a teacher in a list
+    @PostMapping("/{id}/add-teacher")
+    public ResponseEntity<PersonList> addTeacherToList(@PathVariable Long id, @RequestBody Person person) {
+        if (!person.getIs_teacher()){
+            return ResponseEntity.badRequest().build();
+        }
+        return personListRepository.findById(id)
+                .map(list -> {
+                    list.addMember(person);
+                    PersonList updateList = personListRepository.save(list);
+                    return ResponseEntity.ok(updateList);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 
    // Update
    @PutMapping("/{id}")
