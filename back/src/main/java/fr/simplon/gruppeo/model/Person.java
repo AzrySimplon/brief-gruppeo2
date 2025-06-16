@@ -32,7 +32,7 @@ public class Person {
     private Boolean is_teacher;
 
     // Join to PersonGroup table
-    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "members")
     private Set<PersonGroup> groups = new HashSet<>();
 
     // Join to UserViewer table
@@ -40,7 +40,7 @@ public class Person {
     private User user;
 
     //Join to PersonList table
-    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "members")
     private Set<PersonList> lists = new HashSet<>();
 
     public Person() {

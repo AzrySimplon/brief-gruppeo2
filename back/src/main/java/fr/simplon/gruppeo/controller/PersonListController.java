@@ -40,7 +40,9 @@ public class PersonListController {
 
    // Add a group in a list
    @PostMapping("/{id}/add-group")
-   public ResponseEntity<PersonList> addGroupToList(@PathVariable Long id, @RequestBody PersonGroup group) {
+   public ResponseEntity<PersonList> addGroupToList(
+		   @PathVariable Long id,
+		   @RequestBody PersonGroup group) {
       return personListRepository.findById(id)
               .map(list -> {
                  list.addGroup(group);
