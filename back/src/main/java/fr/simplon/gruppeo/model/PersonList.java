@@ -1,6 +1,8 @@
 package fr.simplon.gruppeo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "person_list")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class PersonList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +25,15 @@ public class PersonList {
             joinColumns = @JoinColumn(name = "list_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
-    @JsonIgnoreProperties("lists")
     private Set<Person> members = new HashSet<>();
 
     //Join to UserAdmin table
     @ManyToMany(mappedBy = "personLists")
     private Set<UserAdmin> admins = new HashSet<>();
 
+    //Join to PersonGroup table
+    @OneToMany(mappedBy = "lists")
+    private Set<PersonGroup> groups = new HashSet<>();
 
     public PersonList() {
     }
@@ -88,14 +93,26 @@ public class PersonList {
         this.admins = admins;
     }
 
+    public Set<PersonGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<PersonGroup> groups) {
+        this.groups = groups;
+    }
+
+    public void addGroup(PersonGroup group) {
+        this.groups.add(group);
+        group.setList(this);
+    }
+
     public boolean containsPerson(Person person) {
         return members.contains(person);
     }
 
     public boolean containsGroup(PersonGroup group) {
-        // Check if any member of the group is in this list
-        return group.getMembers().stream()
-                .anyMatch(members::contains);
+        // Check if the group is directly associated with this list
+        return groups.contains(group);
     }
 
 }

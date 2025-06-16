@@ -1,6 +1,8 @@
 package fr.simplon.gruppeo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "person_group")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class PersonGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,17 +18,17 @@ public class PersonGroup {
     private String name;
     private Integer number_of_members;
 
-    //Join to Person table
     @ManyToMany
     @JoinTable(
-            name = "person_group_members",
+            name = "group_members",
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
-    @JsonIgnoreProperties("groups")
     private Set<Person> members = new HashSet<>();
 
-
+    @ManyToOne
+    @JoinColumn(name = "list_id")
+    private PersonList lists;
 
     public PersonGroup() {
     }
@@ -76,5 +79,16 @@ public class PersonGroup {
     public void setMembers(Set<Person> members) {
         this.members = members;
         updateNumberOfMembers();
+    }
+
+    public PersonList getList() {
+        return lists;
+    }
+
+    public void setList(PersonList list) {
+        this.lists = list;
+        if (list != null) {
+            list.getGroups().add(this);
+        }
     }
 }
