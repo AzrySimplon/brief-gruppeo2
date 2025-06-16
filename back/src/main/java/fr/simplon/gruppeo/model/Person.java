@@ -31,7 +31,7 @@ public class Person {
     private LocalDate birth_date;
 
     // Join to PersonGroup table
-    @ManyToMany(mappedBy = "members") //removed cascade
+    @ManyToMany(mappedBy = "members")
     private Set<PersonGroup> groups = new HashSet<>();
 
     // Join to UserViewer table
@@ -39,7 +39,7 @@ public class Person {
     private UserViewer userViewer;
 
     //Join to PersonList table
-    @ManyToMany(mappedBy = "members") //removed cascade
+    @ManyToMany(mappedBy = "members")
     private Set<PersonList> lists = new HashSet<>();
 
     public Person() {

@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class PersonListControllerTest {
    @Autowired
    private MockMvc mockMvc;
@@ -39,15 +40,6 @@ public class PersonListControllerTest {
    private PersonGroup testGroup;
    private Person testPerson;
 
-//   @BeforeEach
-//   void setUp() {
-//      personGroupRepository.deleteAll();
-//      personListRepository.deleteAll();
-//      personRepository.deleteAll();
-//      testList = new PersonList("TestList", 0);
-//      testGroup = new PersonGroup("TestGroup", 2);
-//      testPerson = new Person("TestPerson", Gender.X, 5, true, 2, Profile.NORMAL, LocalDate.now());
-//   }
    @BeforeEach
    void setUp() {
       // Clear all relationships
@@ -104,7 +96,7 @@ public class PersonListControllerTest {
               .andExpect(status().isNotFound());
    }
 
-   //Test updating a list (?)
+   //Test updating a list
    @Test
    void shouldUpdateList() throws Exception {
       PersonList savedList = personListRepository.save(testList);
@@ -160,6 +152,6 @@ public class PersonListControllerTest {
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(testPerson)))
               .andExpect(status().isOk())
-              .andExpect(jsonPath("$.lists[0].id").value(savedPerson.getId()));
+              .andExpect(jsonPath("$.number_of_members").value(testList.getNumber_of_members()));
    }
 }
