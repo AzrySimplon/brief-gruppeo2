@@ -55,6 +55,7 @@ public class PersonGroupController {
             return ResponseEntity.badRequest().build();
         }
     }
+
     //Set the list to a group
     @PostMapping("/{id}/set-list")
     public ResponseEntity<PersonGroup> setListForGroup(@PathVariable Long id, @RequestBody PersonList list) {

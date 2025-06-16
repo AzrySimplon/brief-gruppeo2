@@ -27,10 +27,6 @@ public class PersonList {
     )
     private Set<Person> members = new HashSet<>();
 
-    //Join to UserAdmin table
-    @ManyToMany(mappedBy = "personLists")
-    private Set<UserAdmin> admins = new HashSet<>();
-
     //Join to PersonGroup table
     @OneToMany(mappedBy = "lists")
     private Set<PersonGroup> groups = new HashSet<>();
@@ -83,14 +79,6 @@ public class PersonList {
     public void setMembers(Set<Person> members) {
         this.members = members;
         updateNumberOfMembers();
-    }
-
-    Set<UserAdmin> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(Set<UserAdmin> admins) {
-        this.admins = admins;
     }
 
     public Set<PersonGroup> getGroups() {

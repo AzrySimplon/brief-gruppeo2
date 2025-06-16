@@ -29,6 +29,7 @@ public class Person {
     private Profile profile;
     
     private LocalDate birth_date;
+    private Boolean is_teacher;
 
     // Join to PersonGroup table
     @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
@@ -36,7 +37,7 @@ public class Person {
 
     // Join to UserViewer table
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private UserViewer userViewer;
+    private User user;
 
     //Join to PersonList table
     @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
@@ -127,12 +128,12 @@ public class Person {
         this.groups = groups;
     }
 
-    public UserViewer getUserViewer() {
-        return userViewer;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserViewer(UserViewer userViewer) {
-        this.userViewer = userViewer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<PersonList> getLists() {
@@ -151,5 +152,13 @@ public class Person {
     public void removeList(PersonList list) {
         this.lists.remove(list);
         list.getMembers().remove(this);
+    }
+
+    public Boolean getIs_teacher() {
+        return is_teacher;
+    }
+
+    public void setIs_teacher(Boolean is_teacher) {
+        this.is_teacher = is_teacher;
     }
 }
