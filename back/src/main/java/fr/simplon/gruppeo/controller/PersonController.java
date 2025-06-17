@@ -10,8 +10,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-    private final PersonRepository personRepository;
 
+    private final PersonRepository personRepository;
     public PersonController(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }

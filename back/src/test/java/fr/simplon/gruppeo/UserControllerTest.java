@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("test")
+@ActiveProfiles("test") //tests are done with h2 Driver
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
@@ -46,6 +46,7 @@ public class UserControllerTest {
         testUser2 = new User("testUser2", "password2");
     }
 
+    //Test user creation
     @Test
     void createUser_ShouldCreateNewUser() throws Exception {
         User newUser = new User("newUser", "newPassword");
@@ -59,6 +60,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.id", notNullValue()));
     }
 
+    //Test get all users
     @Test
     void getAllUsers_ShouldReturnAllUsers() throws Exception {
         testUser1 = userRepository.save(testUser1);
@@ -71,6 +73,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[1].username", is(testUser2.getUsername())));
     }
 
+    //Test get user with id
     @Test
     void getUserById_WithValidId_ShouldReturnUser() throws Exception {
         testUser1 = userRepository.save(testUser1);
@@ -81,12 +84,14 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(testUser1.getPassword())));
     }
 
+    //Test fail getting user with invalid id
     @Test
     void getUserById_WithInvalidId_ShouldReturn404() throws Exception {
         mockMvc.perform(get("/user/{id}", 999L))
                 .andExpect(status().isNotFound());
     }
 
+    //Test updating a user
     @Test
     void updateUser_WithValidId_ShouldUpdateUser() throws Exception {
         User updatedUser = new User("updatedUsername", "updatedPassword");
@@ -100,6 +105,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is("updatedPassword")));
     }
 
+    //Test failing to update a user with invalid id
     @Test
     void updateUser_WithInvalidId_ShouldReturn404() throws Exception {
         User updatedUser = new User("updatedUsername", "updatedPassword");
@@ -110,6 +116,7 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    //Test delete user
     @Test
     void deleteUser_WithValidId_ShouldDeleteUser() throws Exception {
         testUser1 = userRepository.save(testUser1);
@@ -122,12 +129,14 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    //Test delete user with invalid id
     @Test
     void deleteUser_WithInvalidId_ShouldReturn404() throws Exception {
         mockMvc.perform(delete("/user/{id}", 999L))
                 .andExpect(status().isNotFound());
     }
 
+    //Test get user with username
     @Test
     void getUserByUsername_WithValidUsername_ShouldReturnUser() throws Exception {
         testUser1 = userRepository.save(testUser1);
@@ -138,12 +147,14 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(testUser1.getPassword())));
     }
 
+    //Test get user with invalid username
     @Test
     void getUserByUsername_WithInvalidUsername_ShouldReturn404() throws Exception {
         mockMvc.perform(get("/user/username/{username}", "nonexistentUser"))
                 .andExpect(status().isNotFound());
     }
 
+    //Test that person is updated with update of user
     @Test
     void updateUser_WithPerson_ShouldUpdateUserWithPerson() throws Exception {
         testUser1 = userRepository.save(testUser1);
