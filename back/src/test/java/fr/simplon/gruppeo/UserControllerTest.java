@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -48,6 +49,7 @@ public class UserControllerTest {
 
     //Test user creation
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void createUser_ShouldCreateNewUser() throws Exception {
         User newUser = new User("newUser", "newPassword");
         
@@ -62,6 +64,7 @@ public class UserControllerTest {
 
     //Test get all users
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void getAllUsers_ShouldReturnAllUsers() throws Exception {
         testUser1 = userRepository.save(testUser1);
         testUser2 = userRepository.save(testUser2);
@@ -75,6 +78,7 @@ public class UserControllerTest {
 
     //Test get user with id
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void getUserById_WithValidId_ShouldReturnUser() throws Exception {
         testUser1 = userRepository.save(testUser1);
 
@@ -86,6 +90,7 @@ public class UserControllerTest {
 
     //Test fail getting user with invalid id
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void getUserById_WithInvalidId_ShouldReturn404() throws Exception {
         mockMvc.perform(get("/user/{id}", 999L))
                 .andExpect(status().isNotFound());
@@ -93,6 +98,7 @@ public class UserControllerTest {
 
     //Test updating a user
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void updateUser_WithValidId_ShouldUpdateUser() throws Exception {
         User updatedUser = new User("updatedUsername", "updatedPassword");
         testUser1 = userRepository.save(testUser1);
@@ -107,6 +113,7 @@ public class UserControllerTest {
 
     //Test failing to update a user with invalid id
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void updateUser_WithInvalidId_ShouldReturn404() throws Exception {
         User updatedUser = new User("updatedUsername", "updatedPassword");
         
@@ -118,6 +125,7 @@ public class UserControllerTest {
 
     //Test delete user
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void deleteUser_WithValidId_ShouldDeleteUser() throws Exception {
         testUser1 = userRepository.save(testUser1);
 
@@ -131,6 +139,7 @@ public class UserControllerTest {
 
     //Test delete user with invalid id
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void deleteUser_WithInvalidId_ShouldReturn404() throws Exception {
         mockMvc.perform(delete("/user/{id}", 999L))
                 .andExpect(status().isNotFound());
@@ -138,6 +147,7 @@ public class UserControllerTest {
 
     //Test get user with username
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void getUserByUsername_WithValidUsername_ShouldReturnUser() throws Exception {
         testUser1 = userRepository.save(testUser1);
 
@@ -149,6 +159,7 @@ public class UserControllerTest {
 
     //Test get user with invalid username
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void getUserByUsername_WithInvalidUsername_ShouldReturn404() throws Exception {
         mockMvc.perform(get("/user/username/{username}", "nonexistentUser"))
                 .andExpect(status().isNotFound());
@@ -156,6 +167,7 @@ public class UserControllerTest {
 
     //Test that person is updated with update of user
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void updateUser_WithPerson_ShouldUpdateUserWithPerson() throws Exception {
         testUser1 = userRepository.save(testUser1);
 

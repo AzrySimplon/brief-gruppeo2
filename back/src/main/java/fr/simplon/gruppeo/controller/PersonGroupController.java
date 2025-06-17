@@ -34,7 +34,10 @@ public class PersonGroupController {
     public ResponseEntity<PersonGroup> addMemberToGroup(@PathVariable Long id, @PathVariable Long personId) {
         Person person = personRepository.findById(personId).orElse(null);
         //Get group's list id
-        Long groupListId = Objects.requireNonNull(groupRepository.findById(id).orElse(null)).getList().getId();
+       Long groupListId = groupRepository.findById(id)
+               .map(group -> group.getList())
+               .map(list -> list.getId())
+               .orElse(null);
 
         if (person == null || groupListId == null) {
             return ResponseEntity.notFound().build();
