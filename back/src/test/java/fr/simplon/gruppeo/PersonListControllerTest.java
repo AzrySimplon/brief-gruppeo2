@@ -43,6 +43,7 @@ public class PersonListControllerTest {
    private PersonList testList;
    private PersonGroup testGroup;
    private Person testPerson;
+   private Person testPerson2;
 
    @BeforeEach
    void setUp() {
@@ -59,6 +60,9 @@ public class PersonListControllerTest {
       testList = new PersonList("TestList", 0);
       testGroup = new PersonGroup("TestGroup", 2);
       testPerson = new Person("TestPerson", Gender.X, 5, true, 2, Profile.NORMAL, LocalDate.now());
+      testPerson.setIs_teacher(false);
+      testPerson2 = new Person("TestPerson2", Gender.F, 5, true, 2, Profile.SHY, LocalDate.now());
+      testPerson2.setIs_teacher(true);
    }
 
    //Test List creation
@@ -142,20 +146,27 @@ public class PersonListControllerTest {
               .andExpect(jsonPath("$.groups[0].id").value(savedGroup.getId()));
    }
 
-   //Test linking multiple groups to a list
+   //Test adding a student to a list
    @Test
-   void ShouldAddMultipleGroupsToList() throws Exception {
-
+   void ShouldAddMemberToList() throws Exception {
+      Person savedPerson = personRepository.save(testPerson);
+      PersonList savedList = personListRepository.save(testList);
+      mockMvc.perform(post("/person-list/{id}/add-student", savedList.getId(), savedPerson.getId())
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(objectMapper.writeValueAsString(testPerson)))
+              .andExpect(status().isOk())
+              .andExpect(jsonPath("$.number_of_members").value(testList.getNumber_of_members()));
    }
-   //Test adding a member to a list
-//   @Test
-//   void ShouldAddMemberToList() throws Exception {
-//      Person savedPerson = personRepository.save(testPerson);
-//      PersonList savedList = personListRepository.save(testList);
-//      mockMvc.perform(post("/person-list/{id}/add-member", savedList.getId(), savedPerson.getId())
-//              .contentType(MediaType.APPLICATION_JSON)
-//              .content(objectMapper.writeValueAsString(testPerson)))
-//              .andExpect(status().isOk())
-//              .andExpect(jsonPath("$.number_of_members").value(testList.getNumber_of_members()));
-//   }
+
+   //Test adding a teacher to a list
+   @Test
+   void ShouldAddTeacherToList() throws Exception {
+      Person savedPerson2 = personRepository.save(testPerson2);
+      PersonList savedList = personListRepository.save(testList);
+      mockMvc.perform(post("/person-list/{id}/add-teacher", savedList.getId(), savedPerson2.getId())
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(testPerson2)))
+              .andExpect(status().isOk())
+              .andExpect(jsonPath("$.number_of_members").value(testList.getNumber_of_members()));
+   }
 }
