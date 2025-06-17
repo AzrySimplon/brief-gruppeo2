@@ -42,7 +42,6 @@ public class PersonList {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,7 +49,6 @@ public class PersonList {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -58,7 +56,6 @@ public class PersonList {
     public Integer getNumber_of_members() {
         return number_of_members;
     }
-
     public void setNumber_of_members(Integer number_of_members) {
         this.number_of_members = number_of_members;
     }
@@ -75,7 +72,6 @@ public class PersonList {
     public Set<Person> getMembers() {
         return members;
     }
-
     public void setMembers(Set<Person> members) {
         this.members = members;
         updateNumberOfMembers();
@@ -84,7 +80,6 @@ public class PersonList {
     public Set<PersonGroup> getGroups() {
         return groups;
     }
-
     public void setGroups(Set<PersonGroup> groups) {
         this.groups = groups;
     }
@@ -97,7 +92,6 @@ public class PersonList {
     public boolean containsPerson(Person person) {
         return members.contains(person);
     }
-
     public boolean containsGroup(PersonGroup group) {
         // Check if the group is directly associated with this list
         return groups.contains(group);

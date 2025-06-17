@@ -18,6 +18,7 @@ public class PersonGroup {
     private String name;
     private Integer number_of_members;
 
+    //Join to Person table ('members of group')
     @ManyToMany
     @JoinTable(
             name = "group_members",
@@ -26,6 +27,7 @@ public class PersonGroup {
     )
     private Set<Person> members = new HashSet<>();
 
+    //Join to List table
     @ManyToOne
     @JoinColumn(name = "list_id")
     private PersonList lists;
@@ -38,11 +40,9 @@ public class PersonGroup {
         this.number_of_members = number_of_members;
     }
 
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,7 +50,6 @@ public class PersonGroup {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -58,11 +57,9 @@ public class PersonGroup {
     public Integer getNumber_of_members() {
         return number_of_members;
     }
-
     public void setNumber_of_members(Integer number_of_members) {
         this.number_of_members = number_of_members;
     }
-
     public void updateNumberOfMembers() {
         this.number_of_members = members.size();
     }
@@ -75,7 +72,6 @@ public class PersonGroup {
     public Set<Person> getMembers() {
         return members;
     }
-
     public void setMembers(Set<Person> members) {
         this.members = members;
         updateNumberOfMembers();
@@ -84,7 +80,6 @@ public class PersonGroup {
     public PersonList getList() {
         return lists;
     }
-
     public void setList(PersonList list) {
         this.lists = list;
         if (list != null) {

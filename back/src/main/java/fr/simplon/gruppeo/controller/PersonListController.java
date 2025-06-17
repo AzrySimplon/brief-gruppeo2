@@ -11,8 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/person-list")
 public class PersonListController {
-   private final PersonListRepository personListRepository;
 
+   private final PersonListRepository personListRepository;
    public PersonListController(PersonListRepository personListRepository) {
       this.personListRepository = personListRepository;
    }

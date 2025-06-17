@@ -35,7 +35,7 @@ public class Person {
     @ManyToMany(mappedBy = "members")
     private Set<PersonGroup> groups = new HashSet<>();
 
-    // Join to UserViewer table
+    // Join to User table
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private User user;
 
@@ -59,7 +59,6 @@ public class Person {
     public Long getId() {
         return id;
 }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -67,7 +66,6 @@ public class Person {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -75,7 +73,6 @@ public class Person {
     public Gender getGender() {
         return gender;
     }
-
     public void setGender(Gender gender) {
         this.gender = gender;
     }
@@ -83,7 +80,6 @@ public class Person {
     public Integer getFrench_knowledge() {
         return french_knowledge;
     }
-
     public void setFrench_knowledge(Integer french_knowledge) {
         this.french_knowledge = french_knowledge;
     }
@@ -91,7 +87,6 @@ public class Person {
     public Boolean getOld_DWWM() {
         return old_DWWM;
     }
-
     public void setOld_DWWM(Boolean old_DWWM) {
         this.old_DWWM = old_DWWM;
     }
@@ -99,7 +94,6 @@ public class Person {
     public Integer getTechnical_knowledge() {
         return technical_knowledge;
     }
-
     public void setTechnical_knowledge(Integer technical_knowledge) {
         this.technical_knowledge = technical_knowledge;
     }
@@ -107,7 +101,6 @@ public class Person {
     public Profile getProfile() {
         return profile;
     }
-
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
@@ -115,7 +108,6 @@ public class Person {
     public LocalDate getBirth_date() {
         return birth_date;
     }
-
     public void setBirth_date(LocalDate birth_date) {
         this.birth_date = birth_date;
     }
@@ -123,7 +115,6 @@ public class Person {
     public Set<PersonGroup> getGroups() {
         return groups;
     }
-
     public void setGroups(Set<PersonGroup> groups) {
         this.groups = groups;
     }
@@ -131,7 +122,6 @@ public class Person {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -139,7 +129,6 @@ public class Person {
     public Set<PersonList> getLists() {
         return lists;
     }
-
     public void setLists(Set<PersonList> lists) {
         this.lists = lists;
     }
@@ -148,7 +137,6 @@ public class Person {
         this.lists.add(list);
         list.getMembers().add(this);
     }
-
     public void removeList(PersonList list) {
         this.lists.remove(list);
         list.getMembers().remove(this);
@@ -157,7 +145,6 @@ public class Person {
     public Boolean getIs_teacher() {
         return is_teacher;
     }
-
     public void setIs_teacher(Boolean is_teacher) {
         this.is_teacher = is_teacher;
     }
