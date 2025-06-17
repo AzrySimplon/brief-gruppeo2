@@ -30,19 +30,19 @@ public class JwtUtils {
         return createToken(claims, username);
     }
 
-    private String createToken(Map<String, Object> claims, String subject){
+    private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(getSignKey(), SignatureAlgorithm.ES256)
+                .signWith(getSignKey(), SignatureAlgorithm.HS256) // Changed from ES256 to HS256
                 .compact();
     }
 
     private SecretKey getSignKey() {
         byte[] keyBytes = secretKey.getBytes();
-        return new SecretKeySpec(keyBytes, SignatureAlgorithm.ES256.getJcaName());
+        return new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName()); // Changed from ES256 to HS256
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){
