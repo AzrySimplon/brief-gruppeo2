@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -50,6 +51,7 @@ public class PersonControllerTest {
 
     //Test person creation
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldCreatePerson() throws Exception {
         mockMvc.perform(post("/person")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -65,6 +67,7 @@ public class PersonControllerTest {
 
     //Test getting all persons
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldGetAllPersons() throws Exception {
         Person savedPerson1 = personRepository.save(testPerson);
         Person savedPerson2 = personRepository.save(testPerson2);
@@ -78,6 +81,7 @@ public class PersonControllerTest {
 
     //Test getting a person by id
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldGetPersonById() throws Exception {
         Person savedPerson = personRepository.save(testPerson);
 
@@ -89,6 +93,7 @@ public class PersonControllerTest {
 
     //Test getting a person by id that does not exist
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldReturn404WhenGetNonExistingPerson() throws Exception {
         mockMvc.perform(get("/person/{id}", 999L))
                 .andExpect(status().isNotFound());
@@ -96,6 +101,7 @@ public class PersonControllerTest {
 
     //Test updating a person
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldUpdatePerson() throws Exception {
         Person savedPerson = personRepository.save(testPerson);
         testPerson.setName("UpdatedName");
@@ -111,6 +117,7 @@ public class PersonControllerTest {
 
     //Test updating a person that does not exist
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldReturn404WhenUpdatingNonExistingPerson() throws Exception {
         mockMvc.perform(put("/person/{id}", 999L)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -120,6 +127,7 @@ public class PersonControllerTest {
 
     //Test deleting a person
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldDeletePerson() throws Exception {
         Person savedPerson = personRepository.save(testPerson);
 
@@ -132,6 +140,7 @@ public class PersonControllerTest {
 
     //Test deleting a person that does not exist
     @Test
+    @WithMockUser(username = "testUser", password = "pass")
     void shouldReturn404WhenDeletingNonExistingPerson() throws Exception {
         mockMvc.perform(delete("/person/{id}", 999L))
                 .andExpect(status().isNotFound());
