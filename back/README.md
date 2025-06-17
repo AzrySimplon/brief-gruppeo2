@@ -1,8 +1,8 @@
 # Gruppeo API
 
-A Spring Boot application for managing groups, persons, and user authentication.
+A Spring Boot backend application for managing groups, persons, and user authentication.
 
-## 🚀 Features
+## Features
 
 - JWT-based Authentication
 - User Management
@@ -11,7 +11,7 @@ A Spring Boot application for managing groups, persons, and user authentication.
 - List Management
 - Role-based Access Control
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 ### Backend
 - Java 24
@@ -28,45 +28,48 @@ A Spring Boot application for managing groups, persons, and user authentication.
 - Spring Security Test
 - MockMvc
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Java JDK 24
 - Maven
 - PostgreSQL Database
 
-## 🔧 Configuration
+## Configuration
 
 ### Application Properties
 
 ```properties
 # Database Configuration
-spring.datasource.url=your_database_url
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+spring.datasource.url=database_url
+spring.datasource.username=username
+spring.datasource.password=password
 
 # JWT Configuration
-app.secret-key=your_secret_key
-app.expiration-time=86400000
+app.secret-key=secret_key
+app.expiration-time=900000
 ```
-## 🚀 Installation & Running
+## Installation & Running
 
 1. Clone the repository
 ```bash
-git clone [repository-url]
+git clone
 ```
 2. Navigate to project directory
 ```bash
-cd gruppeo
+cd \back
 ```
 3. Build the project
 ```bash
 mvn clean install
 ```
-4. Run the application
+4. Run the app
 ```bash
 mvn spring-boot:run
 ```
-## 🔒 API Endpoints
+5. Use Swagger UI
+> API documentation is available via Swagger UI at `/swagger-ui/index.html` when running the application locally.
+
+## API Endpoints
 
 ### Authentication
 - POST `/api/auth/register` - Register new user
@@ -97,7 +100,16 @@ mvn spring-boot:run
 - POST `/person-list/{id}/add-student` - Add student to list
 - POST `/person-list/{id}/add-teacher` - Add teacher to list
 
-## 🧪 Testing Controllers
+### PersonGroup Endpoints
+- GET `/person-group` - Get all groups
+- GET `/person-group/{id}` - Get group by ID
+- POST `/person-group` - Create new group
+- PUT `/person-group/{id}` - Update group
+- DELETE `/person-group/{id}` - Delete group
+- POST `/person-group/{id}/add-member/{personId}` - Add member to group
+- POST `/person-group/{id}/set-list` - Set list for group
+
+## Testing Controllers
 
 The application includes a coverage on controllers:
 - Auth Controller
@@ -110,14 +122,25 @@ Run tests using:
 ```bash
 mvn test
 ```
-## 🔐 Security
+or run individual tests in src\test\java\fr.simplon.gruppeo
+
+## Error Handling
+
+The API uses standard HTTP status codes:
+- 200 OK - Success
+- 201 Created - Resource successfully created
+- 400 Bad Request - Invalid input
+- 404 Not Found - Resource not found
+- 500 Internal Server Error - Server error
+
+## Security
 
 - JWT-based authentication
 - Password encryption using BCrypt
 - Role-based access control
 - Secure endpoints with Spring Security
 
-## 📝 Models
+## Models
 
 ### User
 - Username
@@ -136,8 +159,11 @@ mvn test
 ### PersonList
 - Name
 - Number of Members
+- Members (Set of Person entities)
 - Groups
 
 ### PersonGroup
 - Name
-- Size
+- Number of Members
+- Members (Set of Person entities)
+- Associated List
