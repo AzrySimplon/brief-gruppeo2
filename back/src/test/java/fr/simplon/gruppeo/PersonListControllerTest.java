@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +68,7 @@ public class PersonListControllerTest {
 
    //Test List creation
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void shouldCreateList() throws Exception {
       mockMvc.perform(post("/person-list")
                  .contentType(MediaType.APPLICATION_JSON)
@@ -78,6 +80,7 @@ public class PersonListControllerTest {
 
    //Test getting all lists
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void shouldGetAllLists() throws Exception {
       PersonList savedList = personListRepository.save(testList);
       mockMvc.perform(get("/person-list"))
@@ -89,6 +92,7 @@ public class PersonListControllerTest {
 
    //Test getting a list by id
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void shouldGetListById() throws Exception {
       PersonList savedList = personListRepository.save(testList);
       mockMvc.perform(get("/person-list/{id}", savedList.getId()))
@@ -99,6 +103,7 @@ public class PersonListControllerTest {
 
    //Test getting a non existent list (by id)
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void shouldReturn404WhenGettingNonExistentList() throws Exception {
       mockMvc.perform(get("/person-list/{id}", 999L))
               .andExpect(status().isNotFound());
@@ -106,6 +111,7 @@ public class PersonListControllerTest {
 
    //Test updating a list
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void shouldUpdateList() throws Exception {
       PersonList savedList = personListRepository.save(testList);
       testList.setName("UpdatedName");
@@ -121,6 +127,7 @@ public class PersonListControllerTest {
 
    //Test deleting a list
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void shouldDeleteList() throws Exception {
       PersonList savedList = personListRepository.save(testList);
       mockMvc.perform(delete("/person-list/{id}", savedList.getId()))
@@ -132,6 +139,7 @@ public class PersonListControllerTest {
 
    //Test linking a group to a list
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void ShouldAddGroupToList() throws Exception {
       PersonGroup savedGroup = personGroupRepository.save(testGroup);
       PersonList savedList = personListRepository.save(testList);
@@ -148,6 +156,7 @@ public class PersonListControllerTest {
 
    //Test adding a student to a list
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void ShouldAddMemberToList() throws Exception {
       Person savedPerson = personRepository.save(testPerson);
       PersonList savedList = personListRepository.save(testList);
@@ -160,6 +169,7 @@ public class PersonListControllerTest {
 
    //Test adding a teacher to a list
    @Test
+   @WithMockUser(username = "testUser", password = "pass")
    void ShouldAddTeacherToList() throws Exception {
       Person savedPerson2 = personRepository.save(testPerson2);
       PersonList savedList = personListRepository.save(testList);
