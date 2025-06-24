@@ -22,7 +22,7 @@ export class GroupCreationComponent implements AfterViewInit {
   @ViewChild('checkbox_age') checkboxAge!: CheckboxChoiceComponent;
   @ViewChild('checkbox_level') checkboxLevel!: CheckboxChoiceComponent;
   @ViewChild('input_person_nbr') textInputPersonNbr!: TextInputComponent;
-  @Input() list!: List;
+  @Input() list!: List; //Defined with '?' in the html part, to check later
 
   checkboxComponents: CheckboxChoiceComponent[] = [];
 

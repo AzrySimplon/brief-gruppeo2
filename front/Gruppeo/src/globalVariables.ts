@@ -25,9 +25,6 @@ const member4: Person = generateRandomPerson();
 
 
 export class GlobalVariables {
-  public static user = {
-    isConnected: false
-  }
 
   public static temporary: {lists: List[], groups: Group[]} = {
     lists:[{id: 1, name: "liste1", nbr_persons: 5, members: [member1, member2]}, {id: 2, name: "liste recherche stage", nbr_persons: 3, members: [member3, member4]}],
