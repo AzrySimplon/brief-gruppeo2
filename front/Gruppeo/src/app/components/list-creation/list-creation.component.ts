@@ -6,7 +6,7 @@ import {CheckboxChoiceComponent} from '../checkbox-choice/checkbox-choice.compon
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-list-creation',
+  selector: 'app-list-interface-creation',
   imports: [
     NgForOf,
     TextInputComponent,

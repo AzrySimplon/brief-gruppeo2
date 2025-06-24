@@ -1,6 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {TextInputComponent} from '../text-input/text-input.component';
 import {FormsModule} from '@angular/forms';
+import {AuthService} from '../../services/auth/auth.service';
+import {PersonInterface} from '../../interface/person-interface/person-interface';
+import {UserInterface} from '../../interface/user-interface/user-interface';
 
 @Component({
   selector: 'app-register',
@@ -13,17 +16,14 @@ import {FormsModule} from '@angular/forms';
 })
 export class RegisterComponent {
   @ViewChild('input_activation') textInputActivation!: TextInputComponent;
-  @ViewChild('input_id') textInputPasswordConfirmation!: TextInputComponent;
+  @ViewChild('input_name') textInputName!: TextInputComponent;
   @ViewChild('input_pwd') textInputPassword!: TextInputComponent;
-  inputsArray: TextInputComponent[] = [];
+  userObject: UserInterface = {username: "", password: ""};
 
-  ngAfterViewInit() {
-     this.inputsArray = [this.textInputActivation, this.textInputPasswordConfirmation, this.textInputPassword];
-  }
+  private testService: AuthService = inject(AuthService);
 
-  validate() {
-    this.inputsArray.forEach((input: TextInputComponent) => {
-      console.log('Input:', input.getValue());
-    })
+  validate(): void {
+    this.userObject = {username: this.textInputName.getValue(), password: this.textInputPassword.getValue()};
+    this.testService.createUser(this.userObject).subscribe();
   }
 }

@@ -1,7 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TextInputComponent} from '../text-input/text-input.component';
 import {RouterLink} from '@angular/router';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,17 +16,14 @@ import {RouterLink} from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  @ViewChild('input_id') textInputPasswordConfirmation!: TextInputComponent;
+  @ViewChild('input_id') textInputId!: TextInputComponent;
   @ViewChild('input_pwd') textInputPassword!: TextInputComponent;
-  inputsArray: TextInputComponent[] = [];
-
-  ngAfterViewInit() {
-    this.inputsArray = [this.textInputPasswordConfirmation, this.textInputPassword];
-  }
+  userObject: {username: string, password: string} = {username: "", password: ""};
+  authService: AuthService = inject(AuthService);
 
   validate() {
-    this.inputsArray.forEach((input: TextInputComponent) => {
-      console.log('Input:', input.getValue());
-    })
+    this.userObject = {username: this.textInputId.getValue(), password: this.textInputPassword.getValue()};
+    this.authService.loginUser(this.userObject);
+
   }
 }
