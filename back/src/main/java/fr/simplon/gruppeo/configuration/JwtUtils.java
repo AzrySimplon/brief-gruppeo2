@@ -1,6 +1,7 @@
 package fr.simplon.gruppeo.configuration;
 
 
+import fr.simplon.gruppeo.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,9 +26,10 @@ public class JwtUtils {
     @Value("${app.expiration-time}")
     private long expirationTime;
 
-    public String generateToken(String username){
+    public String generateToken(User user){
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        claims.put("userId", user.getId());
+        return createToken(claims, user.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -75,5 +77,8 @@ public class JwtUtils {
                 .getPayload();
     }
 
-
+    // Add this method to extract userId from token when needed
+    public Long extractUserId(String token) {
+        return extractClaims(token, claims -> claims.get("userId", Long.class));
+    }
 }

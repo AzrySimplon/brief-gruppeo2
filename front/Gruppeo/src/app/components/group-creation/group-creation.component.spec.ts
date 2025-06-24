@@ -102,7 +102,7 @@ describe('GroupCreationComponent', () => {
   });
 
   // Test for proper initialization of input property
-  it('should initialize with the provided list input', () => {
+  it('should initialize with the provided list-interface input', () => {
     expect(component.list).toBeTruthy();
     expect(component.list.id).toBe(1);
     expect(component.list.name).toBe('Test List');

@@ -14,7 +14,7 @@ export const routes: Routes = [
   {path: 'lists', component: ListVisualizationComponent},
   {path: 'groups/:listId', component: GroupVisualizationComponent},
   {path: 'group-creation/:listId', component: GroupCreationComponent},
-  {path: 'list-creation', component: ListCreationComponent},
+  {path: 'list-interface-creation', component: ListCreationComponent},
   {path: 'register', component:RegisterComponent},
   {path: 'login', component:LoginComponent},
   {path: 'account', component:AccountComponent},

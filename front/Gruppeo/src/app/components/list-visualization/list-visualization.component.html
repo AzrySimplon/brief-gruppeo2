@@ -1,9 +1,14 @@
 <h2 class="category-title">Listes</h2>
 <div class="main-container">
-  <button class="classic-button" [routerLink]="'/list-creation'">Créer une nouvelle liste</button>
-<div class="scroll-section">
-  <button *ngFor="let list of listsArray" class="classic-button" routerLink="/groups/1">
-    {{ list.name }} | {{ list.nbr_persons }} personnes
-  </button>
-</div>
+  <button class="classic-button" [routerLink]="'/list-interface-creation'">Créer une nouvelle liste</button>
+  <div class="scroll-section">
+    @for (list of listArray | async; track list.id) {
+      <button class="classic-button" [routerLink]="['/groups', list.id]">
+        {{ list.name }} | {{ list.number_of_members }} personnes
+      </button>
+    }
+    @empty {
+      <p>Aucune liste disponible.</p>
+    }
+  </div>
 </div>
