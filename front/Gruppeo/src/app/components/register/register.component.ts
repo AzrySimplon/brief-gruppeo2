@@ -1,6 +1,7 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {TextInputComponent} from '../text-input/text-input.component';
 import {FormsModule} from '@angular/forms';
+import {TestService} from '../../services/test.service';
 
 @Component({
   selector: 'app-register',
@@ -13,17 +14,15 @@ import {FormsModule} from '@angular/forms';
 })
 export class RegisterComponent {
   @ViewChild('input_activation') textInputActivation!: TextInputComponent;
-  @ViewChild('input_id') textInputPasswordConfirmation!: TextInputComponent;
+  @ViewChild('input_name') textInputName!: TextInputComponent;
   @ViewChild('input_pwd') textInputPassword!: TextInputComponent;
   inputsArray: TextInputComponent[] = [];
+  testObject: {username: string, password: string} = {username: "", password: ""};
 
-  ngAfterViewInit() {
-     this.inputsArray = [this.textInputActivation, this.textInputPasswordConfirmation, this.textInputPassword];
-  }
+  private testService: TestService = inject(TestService);
 
   validate() {
-    this.inputsArray.forEach((input: TextInputComponent) => {
-      console.log('Input:', input.getValue());
-    })
+    this.testObject = {username: this.textInputName.getValue(), password: this.textInputPassword.getValue()};
+    this.testService.createUser(this.testObject).subscribe();
   }
 }
