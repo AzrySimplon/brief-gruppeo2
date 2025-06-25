@@ -31,7 +31,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(
       `${this.url}/login`,
       object,
-      {headers: this.headers}
+      {headers: this.headers, withCredentials: true}
     ).subscribe({
       next: (response: LoginResponse) => {
         this.localstorageManagerService.addUserId(response.userId);

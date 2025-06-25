@@ -18,9 +18,13 @@ export class ListService {
   });
 
   getListByUserId(): Observable<ListInterface[]> {
-    // @ts-ignore
-    return this.http.get(`${this.url}/${this.localstorageManagerService.getUserId()}`,
+    return this.http.get<ListInterface[]>(`${this.url}/${this.localstorageManagerService.getUserId()}`,
       {headers: this.headers, withCredentials: true});
   }
 
+  createList(object: ListInterface) {
+    return this.http.post(`${this.url}`,
+      object,
+      {headers: this.headers, withCredentials: true});
+  }
 }
