@@ -4,24 +4,37 @@ import fr.simplon.gruppeo.model.Person;
 import fr.simplon.gruppeo.model.PersonGroup;
 import fr.simplon.gruppeo.model.PersonList;
 import fr.simplon.gruppeo.repository.PersonListRepository;
+import fr.simplon.gruppeo.repository.PersonRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/person-list")
 public class PersonListController {
 
    private final PersonListRepository personListRepository;
-   public PersonListController(PersonListRepository personListRepository) {
+   private final PersonRepository personRepository;
+   public PersonListController(PersonListRepository personListRepository, PersonRepository personRepository) {
       this.personListRepository = personListRepository;
+      this.personRepository = personRepository;
    }
 
    // Create
-   @PostMapping
-   public ResponseEntity<PersonList> createList(@RequestBody PersonList list) {
-	  PersonList savedList = personListRepository.save(list);
-	  return ResponseEntity.ok(savedList);
+   @PostMapping("/{id}")
+   public ResponseEntity<PersonList> createList(@PathVariable Long id, @RequestBody PersonList list) {
+       Optional<Person> listCreator = personRepository.findById(id);
+
+       if (listCreator.isPresent() && listCreator.get().getIs_teacher()) {
+
+           list.addMember(listCreator.get());
+
+           PersonList savedList = personListRepository.save(list);
+           return ResponseEntity.ok(savedList);
+       }
+
+       return ResponseEntity.badRequest().build();
    }
 
    // Read All
