@@ -5,9 +5,10 @@
   <app-search-bar #input_search></app-search-bar>
 
   <section class="scroll-section">
-    <button *ngFor="let person of personsArray" class="classic-button">{{ person.name }}</button>
+    @for (person of personsArray$ | async; track person.id) {
+  <button class="classic-button">{{ person.name }}</button>
+}
   </section>
 
-  <button class="classic-button">Créer</button>
+  <button class="classic-button" type="submit">Créer</button>
 </form>
-

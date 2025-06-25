@@ -1,27 +1,42 @@
-import {Component, Input, ViewChild} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {Component, inject, Input, ViewChild} from '@angular/core';
+import {AsyncPipe} from '@angular/common';
 import {TextInputComponent} from '../text-input/text-input.component';
 import {SearchBarComponent} from '../search-bar/search-bar.component';
-import {CheckboxChoiceComponent} from '../checkbox-choice/checkbox-choice.component';
 import {FormsModule} from '@angular/forms';
+import {PersonService} from '../../services/person/person.service';
+import {Observable} from 'rxjs';
+import {PersonInterface} from '../../interface/person-interface/person-interface';
+import {ListService} from '../../services/list/list.service';
+import {ListInterface} from '../../interface/list-interface/list-interface';
 
 @Component({
   selector: 'app-list-interface-creation',
   imports: [
-    NgForOf,
     TextInputComponent,
     SearchBarComponent,
-    FormsModule
+    FormsModule,
+    AsyncPipe
   ],
   templateUrl: './list-creation.component.html',
   styleUrl: './list-creation.component.css'
 })
 export class ListCreationComponent {
-  @Input() personsArray!: Person[];
+  private personService: PersonService = inject(PersonService);
+  private listService: ListService = inject(ListService);
 
-  @ViewChild('input_list_name') checkboxDWWM!: CheckboxChoiceComponent;
+  @Input() personsArray$: Observable<PersonInterface[]> = this.personService.getAllPersons();
+
+  @ViewChild('input_list_name') inputListName!: TextInputComponent;
 
   validate() {
-    console.log('Checkbox:', this.checkboxDWWM.getValue());
+    console.log('Input:', this.inputListName.getValue());
+
+    let newList: ListInterface = {
+      name: this.inputListName.getValue(),
+      members: [],
+      number_of_members: 0
+    }
+
+    this.listService.createList(newList);
   }
 }
